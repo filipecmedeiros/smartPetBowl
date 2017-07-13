@@ -85,7 +85,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="#" id="modal">
+                        <a href="#" data-toggle="modal" data-target="#modal-reservatorio">
                             <div class="panel-footer">
                                 <span class="pull-left">Nível do reservatório</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -94,20 +94,25 @@
                         </a>
                     </div>
                 </div>
+
                 <!-- The Modal -->
-                <div id="myModal" class="modal">
-
-                  <!-- Modal content -->
-                  <div class="modal-content">
-                    <span class="close">&times;</span>
-                    <form action="" method="POST">
-                            {% csrf_token %}
-                            {{ form_reservatorio.as_p }}
-                            <button class="btn btn-success" type="submit">Inserir</button>
-                    </form>
-                  </div>
-
-                </div>
+                <div class="modal fade" id="modal-reservatorio">
+                    <div class="modal-dialog">
+                         <div class="modal-content">
+                             <div class="modal-header">
+                                 <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+                                 <h4 class="modal-title">Repor reservatório</h4>
+                             </div>
+                             <div class="modal-body">
+                                 <form action="" method="POST">
+                                    {% csrf_token %}
+                                    {{ form_reservatorio.as_p }}
+                                    <button class="btn btn-success" type="submit">Inserir</button>
+                                </form>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
 
 
 
@@ -124,7 +129,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="#" id="modal_modal">
+                        <a href="#" data-toggle="modal" data-target="#modal-agenda">
                             <div class="panel-footer">
                                 <span class="pull-left">Agendar alimentação</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -135,22 +140,23 @@
                 </div>
 
                 <!-- The Modal -->
-                <div id="myModal_modal" class="modal">
-
-                  <!-- Modal content -->
-                  <div class="modal-content">
-                    <span class="close">&times;</span>
-                    <form action="" method="POST">
-                            {% csrf_token %}
-                            {{ form_agenda.as_p }}
-                            <button class="btn btn-success" type="submit">Inserir</button>
-                    </form>
-                  </div>
-
-                </div>
-
-
-
+                <div class="modal fade" id="modal-agenda">
+                    <div class="modal-dialog">
+                         <div class="modal-content">
+                             <div class="modal-header">
+                                 <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+                                 <h4 class="modal-title">Agendar dieta</h4>
+                             </div>
+                             <div class="modal-body">
+                                 <form action="" method="POST">
+                                    {% csrf_token %}
+                                    {{ form_agenda.as_p }}
+                                    <button class="btn btn-success" type="submit">Inserir</button>
+                                </form>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
 
 
                 <div class="col-lg-3 col-md-6">
