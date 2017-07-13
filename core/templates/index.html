@@ -60,7 +60,7 @@
                                 </div>                                
                             </div>
                         </div>
-                        <a id='el' href="#">
+                        <a id='el' href="#" data-toggle="modal" data-target="#modal">
                             <div class="panel-footer">
                                 <span class="pull-left">Alimentar pet</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -69,7 +69,17 @@
                         </a>
                     </div>
                 </div>
-                
+                <!-- The Modal -->
+                <div class="modal fade" id="modal">
+                    <div class="modal-dialog">
+                         <div class="modal-content">
+                             <div class="modal-body">
+                                 <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+                                 <p> Seu pet foi alimentado :)</p>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
 
 
                 <div class="col-lg-3 col-md-6">
@@ -138,7 +148,6 @@
                         </a>
                     </div>
                 </div>
-
                 <!-- The Modal -->
                 <div class="modal fade" id="modal-agenda">
                     <div class="modal-dialog">
@@ -151,7 +160,7 @@
                                  <form action="" method="POST">
                                     {% csrf_token %}
                                     {{ form_agenda.as_p }}
-                                    <button class="btn btn-success" type="submit">Inserir</button>
+                                    <button class="btn btn-warning" type="submit">Inserir</button>
                                 </form>
                              </div>
                          </div>
@@ -167,12 +176,12 @@
                                     <i class="fa fa-bell-o fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">13</div>
-                                    <div>Novos alertas</div>
+                                    <div class="huge">{{ alertas.count }}</div>
+                                    <div>Alerta(s)</div>
                                 </div>
                             </div>
                         </div>
-                        <a href="#">
+                        <a href="#" data-toggle="modal" data-target="#modal-alerta">
                             <div class="panel-footer">
                                 <span class="pull-left">Cadastrar alertas</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -182,6 +191,25 @@
                     </div>
                 </div>
             </div>
+            <!-- The Modal -->
+            <div class="modal fade" id="modal-alerta">
+                <div class="modal-dialog">
+                     <div class="modal-content">
+                         <div class="modal-header">
+                             <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+                             <h4 class="modal-title">Cadastre seu email para receber alertas</h4>
+                         </div>
+                         <div class="modal-body">
+                             <form action="" method="POST">
+                                {% csrf_token %}
+                                {{ form_alerta.as_p }}
+                                <button class="btn btn-danger" type="submit">Inserir</button>
+                            </form>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+
             <!-- /.row -->
             <div class="row">
                 <div class="col-lg-8">
@@ -209,37 +237,14 @@
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                             <div class="list-group">
-                                <a href="#" class="list-group-item">
-                                    <i class="fa"></i> New Comment
-                                    <span class="pull-right text-muted small"><em>4 minutes ago</em>
-                                    </span>
-                                </a>
-                                <a href="#" class="list-group-item">
-                                    <i class="fa"></i> 3 New Followers
-                                    <span class="pull-right text-muted small"><em>12 minutes ago</em>
-                                    </span>
-                                </a>
-                                <a href="#" class="list-group-item">
-                                    <i class="fa"></i> Message Sent
-                                    <span class="pull-right text-muted small"><em>27 minutes ago</em>
-                                    </span>
-                                </a>
-                                <a href="#" class="list-group-item">
-                                    <i class="fa"></i> New Task
-                                    <span class="pull-right text-muted small"><em>43 minutes ago</em>
-                                    </span>
-                                </a>
-                                <a href="#" class="list-group-item">
-                                    <i class="fa"></i> Server Crashed!
-                                    <span class="pull-right text-muted small"><em>11:13 AM</em>
-                                    </span>
-                                </a>
-
-                                <a href="#" class="list-group-item">
-                                    <i class="fa"></i> Payment Received
-                                    <span class="pull-right text-muted small"><em>Yesterday</em>
-                                    </span>
-                                </a>
+                                {% for alerta in alertas %}
+                                    <a href="#" class="list-group-item">
+                                        <i class="fa"></i> {{alerta.titulo}}
+                                        <span class="pull-right text-muted small"><em>{{ alerta.period }}</em>
+                                        </span>
+                                    </a>
+                                {% endfor %}
+                                
                             </div>
                         </div>
 
@@ -252,7 +257,6 @@
 
 
     <script src="{% static '/conexao.js' %}"></script>
-    <script src="{% static '/modal.js' %}"></script>
 
     <!-- jQuery -->
     <script src="{% static '/vendor/jquery/jquery.min.js' %}"></script>
