@@ -34,7 +34,7 @@ def index (request):
 
 	reservatorio = Reservatorio.objects.latest ('period')
 	agenda = Agenda.objects.latest ('period')
-	alertas = Alerta.objects.all().order_by('-id')[:10]
+	alertas = Alerta.objects.all().order_by('-id')[:5]
 	context = {
 		'reservatorio' : reservatorio,
 		'agenda' : agenda,

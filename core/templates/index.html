@@ -239,9 +239,10 @@
                             <div class="list-group">
                                 {% for alerta in alertas %}
                                     <a href="#" class="list-group-item">
-                                        <i class="fa"></i> {{alerta.titulo}}
+                                        <p class="small">{{alerta.title}}</p> 
                                         <span class="pull-right text-muted small"><em>{{ alerta.period }}</em>
                                         </span>
+                                        <br/>
                                     </a>
                                 {% endfor %}
                                 
