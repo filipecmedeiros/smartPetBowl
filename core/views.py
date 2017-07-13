@@ -44,6 +44,7 @@ def index (request):
 		'form_agenda' : form_agenda,
 		'form_alerta' : form_alerta,
 		'alertas' : alertas,
+		'alertas_count' : Alerta.objects.all().count()
 	}
 	return render(request, 'index.html', context)
 
@@ -81,7 +82,9 @@ def update (request):
 	if (reservatorio.nivel > 0):
 		
 		if (reservatorio.nivel<=2):
-			envia(Alerta.objects.latest('period').email,'O reservatorio do seu pet esta acabando')
+			#envia(Alerta.objects.latest('period').email,'O reservatorio do seu pet esta acabando')
+			Alerta.objects.create (email = Alerta.objects.latest('period').email, title = 'O reservatorio do seu pet esta acabando')
+			pass
 
 		else:
 			pass
@@ -89,7 +92,9 @@ def update (request):
 		reservatorio.save()
 		
 	else:
-		envia(Alerta.objects.latest('period').email,'O reservatorio do seu pet acabou')
+		#envia(Alerta.objects.latest('period').email,'O reservatorio do seu pet acabou')
+		Alerta.objects.create (email = Alerta.objects.latest('period').email, title = 'O reservatorio do seu pet acabou')
+		pass
 
 	return render('index.html')
 
