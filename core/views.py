@@ -44,3 +44,17 @@ def index (request):
 		'alertas' : alertas,
 	}
 	return render(request, 'index.html', context)
+
+def update (request):
+
+	reservatorio = Reservatorio.objects.latest ('period')
+
+	if (reservatorio.nivel > 0):
+		
+		if (reservatorio.nivel<=2):
+			print ('email')
+
+		reservatorio.nivel = reservatorio.nivel-1
+		reservatorio.save()
+
+	return render('index.html')
