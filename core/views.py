@@ -1,6 +1,7 @@
 from django.shortcuts import render
 import requests
-import datetime
+import smtplib
+from django.core.mail import send_mail
 
 from .models import Reservatorio, Agenda, Alerta
 
@@ -25,6 +26,7 @@ def index (request):
 		if form_alerta.is_valid():
 			email = form_alerta.cleaned_data ['email']
 			Alerta.objects.create(email = email)
+			envia(Alerta.objects.latest('period').email,'Seja bem vindo!')
 
 	else:
 		form_reservatorio = ReservatorioForm()
@@ -45,6 +47,33 @@ def index (request):
 	}
 	return render(request, 'index.html', context)
 
+def envia (destinatario, assunto):
+	# Credenciais
+	remetente    = 'smartpetbowl@gmail.com'
+	senha        = 'smartpetbowl456'
+	 
+	# Informações da mensagem
+	texto        = 'Praesent in mauris eu tortor porttitor accumsan. Mauris suscipit, ligula sit amet pharetra semper, nibh ante cursus purus, vel sagittis velit mauris vel metus. Aenean fermentum risus id tortor. Integer imperdiet lectus quis justo. Integer tempor. Vivamus ac urna vel leo pretium'
+	 
+	# Preparando a mensagem
+	msg = '\r\n'.join([
+	  'From: %s' % remetente,
+	  'To: %s' % destinatario,
+	  'Subject: %s' % assunto,
+	  '',
+	  '%s' % texto
+	  ])
+	 
+	# Enviando o email
+	server = smtplib.SMTP('smtp.gmail.com:587')
+	server.starttls()
+	server.login(remetente,senha)
+	server.sendmail(remetente, destinatario, msg)
+	server.quit()
+
+	Alerta.objects.create (email = destinatario, title = assunto, content = texto)
+
+
 def update (request):
 
 	reservatorio = Reservatorio.objects.latest ('period')
@@ -52,9 +81,15 @@ def update (request):
 	if (reservatorio.nivel > 0):
 		
 		if (reservatorio.nivel<=2):
-			print ('email')
+			envia(Alerta.objects.latest('period').email,'O reservatorio do seu pet esta acabando')
 
+		else:
+			pass
 		reservatorio.nivel = reservatorio.nivel-1
 		reservatorio.save()
+		
+	else:
+		envia(Alerta.objects.latest('period').email,'O reservatorio do seu pet acabou')
 
 	return render('index.html')
+
